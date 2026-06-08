@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using TEST;
 
 internal class Program
 {
@@ -15,22 +16,48 @@ internal class Program
         }
         Console.WriteLine($"Hai effettuato l'accesso alle ore {DateTime.Now.ToShortTimeString()} del {DateTime.Now.ToShortDateString()}.");
         string? nickname = null;
-        while (nickname == null)
+        while (string.IsNullOrWhiteSpace(nickname))
         {
-            Console.WriteLine("Inserisci il tuo nickname...");
+            Console.WriteLine("Inserisci un nickname...");
             nickname = Console.ReadLine();
         }
         Console.WriteLine($"{Saluto()} Il tuo nickname è {nickname}.");
         Conferma();
-        //Console.WriteLine("Andiamo avanti.");
-
+        Utente utente = new Utente("", 0, "");
+        Console.Write("Parlami un po' di te... ");
+        Console.WriteLine("Come ti chiami?");
+        string? inputNome = Console.ReadLine();
+        while (string.IsNullOrWhiteSpace(inputNome) || !CharOnly(inputNome))
+        {
+            Console.WriteLine("Errore! Devi usare solo lettere dell'alfabeto.");
+            inputNome = Console.ReadLine();
+        }
+        utente.NomeUtente = inputNome;
+        Console.WriteLine("Quanti anni hai?");
+        string? inputEta = Console.ReadLine();
+        int etaInt;
+        while(!int.TryParse(inputEta, out etaInt))
+        {
+            Console.WriteLine("Errore! Devi inserire un numero intero per l'età.");
+            inputEta = Console.ReadLine();
+        }
+        utente.EtaUtente = etaInt;
+        Console.WriteLine("Da dove vieni?");
+        string? inputCitta = Console.ReadLine();
+        while (string.IsNullOrWhiteSpace(inputCitta) || !CharOnly(inputCitta))
+        {
+            Console.WriteLine("Errore! Devi usare solo lettere dell'alfabeto.");
+            inputCitta = Console.ReadLine();
+        }
+        utente.CittaUtente = inputCitta;
+        Console.WriteLine($"Bene, quindi ti chiami {utente.NomeUtente}, hai {utente.EtaUtente} anni e vieni da {utente.CittaUtente}.");
 
 
 
     }
     static public string Saluto()
     {
-        if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour < 12)
+        if (DateTime.Now.Hour >= 6 && DateTime.Now.Hour <= 12)
         {
             return "Buongiorno!";
         }
@@ -60,9 +87,9 @@ internal class Program
                     break;
             }
         }
-        else if (conferma == null)
+        else if (string.IsNullOrWhiteSpace(conferma))
         {
-            while (conferma == null)
+            while (string.IsNullOrWhiteSpace(conferma))
             {
                 Console.WriteLine("Errore! Devi usare Y o N");
                 conferma = Console.ReadLine();
@@ -97,4 +124,16 @@ internal class Program
             }
         }
     }
+    static bool CharOnly(string testo)
+    {
+        foreach (char c in testo)
+        {
+            if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    //static public void IndovinaNumero()
 }
