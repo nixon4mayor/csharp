@@ -54,6 +54,15 @@ internal class Program
 
 
 
+
+
+
+
+        /*Console.WriteLine("Abbiamo finito! Premi un tasto qualsiasi per uscire...");
+        Console.ReadKey();*/
+
+
+
     }
     static public string Saluto()
     {
@@ -72,51 +81,33 @@ internal class Program
     }   
     static public void Conferma()
     {
-        Console.WriteLine("Vuoi proseguire? Usa Y o N per rispondere.");
-        string? conferma = Console.ReadLine();
-        if (conferma == "y" || conferma == "n")
+        Console.WriteLine("Vuoi proseguire? Premi Y o N per rispondere.");
+        ConsoleKeyInfo conferma = Console.ReadKey(true);
+        if (conferma.Key == ConsoleKey.Y || conferma.Key == ConsoleKey.N)
         {
-            switch (conferma)
+            switch (conferma.Key)
             {
-                case "y":
+                case ConsoleKey.Y:
                     Console.WriteLine("Hai scelto di proseguire.");
                     break;
-                case "n":
+                case ConsoleKey.N:
                     Console.WriteLine("Hai scelto di terminare.");
                     Environment.Exit(0);
                     break;
             }
         }
-        else if (string.IsNullOrWhiteSpace(conferma))
-        {
-            while (string.IsNullOrWhiteSpace(conferma))
-            {
-                Console.WriteLine("Errore! Devi usare Y o N");
-                conferma = Console.ReadLine();
-                switch (conferma)
-                {
-                    case "y":
-                        Console.WriteLine("Hai scelto di proseguire.");
-                        break;
-                    case "n":
-                        Console.WriteLine("Hai scelto di terminare.");
-                        Environment.Exit(0);
-                        break;
-                }
-            }
-        }
         else
         {
-            while (conferma != "y" && conferma != "n")
+            while (conferma.Key != ConsoleKey.Y && conferma.Key != ConsoleKey.N)
             {
-                Console.WriteLine("Errore! Devi usare Y o N.");
-                conferma = Console.ReadLine();
-                switch (conferma)
+                Console.WriteLine("Errore! Premi Y o N.");
+                conferma = Console.ReadKey(true);
+                switch (conferma.Key)
                 {
-                    case "y":
+                    case ConsoleKey.Y:
                         Console.WriteLine("Hai scelto di proseguire.");
                         break;
-                    case "n":
+                    case ConsoleKey.N:
                         Console.WriteLine("Hai scelto di terminare.");
                         Environment.Exit(0);
                         break;
