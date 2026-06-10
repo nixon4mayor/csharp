@@ -6,30 +6,43 @@ namespace TEST
 {
     internal class Utente
     {
-        private string nomeUtente;
-        private int etautente;
-        private string cittaUtente;
+        public string NomeUtente { get; init; }
+        public int EtaUtente { get; init; }
+        public string CittaUtente { get; init; }
+        public string? NicknameUtente { get; private set; }
 
-        public Utente(string nomeUtente, int etautente, string cittaUtente)
+        public Utente(string nome, int eta, string citta)
         {
-            this.nomeUtente = nomeUtente;
-            this.etautente = etautente;
-            this.cittaUtente = cittaUtente;
+            NomeUtente = nome;
+            EtaUtente = eta;
+            CittaUtente = citta;
         }
-        public string NomeUtente
+        public string statusEta => EtaUtente >= 18 ? "maggiorenne" : "minorenne";
+        public string SceltaNickname()
         {
-            get { return nomeUtente; }
-            set { nomeUtente = value; }
+        string? nickname = null;
+        while (string.IsNullOrWhiteSpace(nickname))
+        {
+            Console.WriteLine($"Bene {NomeUtente}, inserisci un nickname...");
+            nickname = Console.ReadLine();
         }
-        public int EtaUtente
-        {
-            get { return etautente; }
-            set { etautente = value; }
+            this.NicknameUtente = nickname;
+            return nickname;
         }
-        public string CittaUtente
+        public void Presentazione()
         {
-            get { return cittaUtente; }
-            set { cittaUtente = value; }
+            Console.Write($"Mi chiamo {NomeUtente} e vengo da {CittaUtente}, ho {EtaUtente} anni ed essendo {statusEta} ");
+            if (EtaUtente >= 18)
+            {
+                Console.WriteLine("posso procedere.");
+            }
+            else
+            {
+                Console.WriteLine("non posso procedere.");
+                Console.WriteLine("Il programma verrà terminato.");
+                Environment.Exit(0);
+            }
+
         }
     }
 }
