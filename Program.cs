@@ -1,4 +1,5 @@
-﻿using TEST;
+﻿using Microsoft.VisualBasic;
+using TEST;
 
 internal class Program
 {
@@ -15,24 +16,27 @@ internal class Program
             inputNome = Console.ReadLine();
         }
 
-        Console.WriteLine("Qual è il tuo anno di nascita?");
-        string? inputAnno = Console.ReadLine();
-        int annoInt;
-        int etaUtente;
-        while(!int.TryParse(inputAnno, out annoInt) || annoInt < 1900 || annoInt > DateTime.Now.Year - 1)
+        Console.WriteLine("Qual è la tua data di nascita? (Formato GG/MM/AAAA)");
+        string? inputData = Console.ReadLine();
+        DateTime dataNascita;
+        while (!DateTime.TryParse(inputData, out dataNascita) || dataNascita.Year < 1900 || dataNascita > DateTime.Now)
         {
-            if (annoInt == DateTime.Now.Year)
+            if (dataNascita.Year == DateTime.Now.Year && dataNascita > DateTime.Now)
             {
-                Console.WriteLine("Errore, non puoi avere 0 anni.");
+                Console.WriteLine("Errore, non puoi essere nato nel futuro.");
             }
             else
             {
-                Console.WriteLine("Errore! Devi inserire un valore tra 1900 e l'anno corrente.");
-            } 
-            inputAnno = Console.ReadLine();
+                Console.WriteLine("Errore! Inserisci una data valida in formato GG/MM/AAAA (dal 1900 a oggi).");
+            }
+            inputData = Console.ReadLine();
         }
-        etaUtente = (DateTime.Now.Year - annoInt);
-        Console.WriteLine($"Quindi hai {etaUtente} anni.. o forse ne hai ancora {etaUtente - 1}.."); //devo inserire verifica mm e gg x calcolare l'età esatta
+        int etaUtente = DateTime.Now.Year - dataNascita.Year;
+        if (DateTime.Now.Month < dataNascita.Month || (DateTime.Now.Month == dataNascita.Month && DateTime.Now.Day < dataNascita.Day))
+        {
+            etaUtente--;
+        }
+        Console.WriteLine($"Quindi hai {etaUtente} anni.");
 
         Console.WriteLine("Da dove vieni?");
         string? inputCitta = Console.ReadLine();
