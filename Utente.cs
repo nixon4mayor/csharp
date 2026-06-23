@@ -18,6 +18,13 @@ namespace TEST
             CittaUtente = citta;
         }
         public string statusEta => EtaUtente >= 18 ? "maggiorenne" : "minorenne";
+
+
+
+
+
+
+
         public string SceltaNickname()
         {
         string? nickname = null;
@@ -29,6 +36,8 @@ namespace TEST
             this.NicknameUtente = nickname;
             return nickname;
         }
+
+
         public void Presentazione()
         {
             Console.Write($"Mi chiamo {NomeUtente} e vengo da {CittaUtente}, ho {EtaUtente} anni ed essendo {statusEta} ");
@@ -38,8 +47,7 @@ namespace TEST
             }
             else
             {
-                Console.WriteLine("non posso procedere.");
-                Console.WriteLine("Il programma verrà terminato.");
+                Console.WriteLine("non posso procedere.\nIl programma verrà terminato.");
                 Environment.Exit(0);
             }
 
